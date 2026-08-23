@@ -1,0 +1,46 @@
+{% extends "blogs/base.html" %}
+
+{% block content %}
+
+<div class="register-wrapper">
+
+    <div class="register-card">
+
+        <!-- Header -->
+        <div class="register-header">
+            <div class="register-icon">
+                <i class="fas fa-user-plus"></i>
+            </div>
+
+            <h2>Create Your Account</h2>
+            <p>Join our community and start sharing your ideas.</p>
+        </div>
+
+        <!-- Form -->
+        <form method="POST">
+            {% csrf_token %}
+
+            <fieldset class="form-group custom-form">
+                {{ form.as_p }}
+            </fieldset>
+
+            <button class="register-submit" type="submit">
+                <i class="fas fa-user-plus"></i>
+                Create Account
+            </button>
+        </form>
+
+        <!-- Login -->
+        <div class="login-section">
+            <span>Already have an account?</span>
+            <a href="{% url 'login' %}">
+                Sign In
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

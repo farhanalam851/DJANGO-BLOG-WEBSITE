@@ -1,0 +1,28 @@
+{% extends "blogs/base.html" %}
+
+{% block content %}
+
+<div class="logout-wrapper">
+
+    <div class="logout-card">
+
+        <div class="logout-icon">
+            <i class="fas fa-check"></i>
+        </div>
+
+        <h2>You Have Been Logged Out</h2>
+
+        <p>
+            Thanks for visiting! Your account has been safely logged out.
+        </p>
+
+        <a href="{% url 'login' %}" class="logout-btn">
+            <i class="fas fa-sign-in-alt"></i>
+            Log In Again
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

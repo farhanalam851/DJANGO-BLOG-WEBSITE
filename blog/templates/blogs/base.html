@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <link rel="stylesheet" href="{% static 'blogs/main.css' %}">
+
+    {% if title %}
+    <title>Django Blog - {{title}} </title>
+    {% else %}
+    <title>Django Blog</title>
+    {% endif %}
+
+</head>
+
+<body>
+    <main role="main" class="container main-content">
+        <div class="row">
+
+            <!-- Main Content -->
+            <div class="col-md-8">
+
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} custom-alert">
+                    <i class="fas fa-info-circle"></i>
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <div class="main-card">
+                    {% block content %}{% endblock %}
+                </div>
+
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-md-4">
+                <aside class="sidebar-card">
+
+                    <div class="sidebar-header">
+                        <div class="sidebar-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+
+                        <div>
+                            <h3>Our Sidebar</h3>
+                            <p>Explore more from our blog</p>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-divider"></div>
+
+                    <ul class="sidebar-list">
+                        <li>
+                            <a href="{% url 'blog-home' %}">
+                                <span>
+                                    <i class="fas fa-newspaper"></i>
+                                    Latest Posts
+                                </span>
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'announcements' %}">
+                                <span>
+                                    <i class="fas fa-bullhorn"></i>
+                                    Announcements
+                                </span>
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'calendar' %}">
+                                <span>
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Calendars
+                                </span>
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'more' %}">
+                                <span>
+                                    <i class="fas fa-ellipsis-h"></i>
+                                    More
+                                </span>
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="sidebar-footer">
+                        <i class="fas fa-lightbulb"></i>
+                        Stay updated with our latest posts and announcements.
+                    </div>
+
+                </aside>
+            </div>
+
+        </div>
+    </main>
+
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark custom-navbar fixed-top">
+            <div class="container">
+
+                <!-- Brand -->
+                <a class="navbar-brand" href="/">
+                    <span class="brand-icon">✦</span>
+                    Django<span>Blog</span>
+                </a>
+
+                <!-- Mobile Toggle -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarToggle">
+
+                    <!-- Left Side -->
+                    <div class="navbar-nav mr-auto">
+                        <a class="nav-item nav-link active" href="{% url 'blog-home' %}">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+
+                        <a class="nav-item nav-link" href="{% url 'blog-about' %}">
+                            <i class="fas fa-info-circle"></i> About
+                        </a>
+                    </div>
+
+                    <!-- Right Side -->
+                    <div class="navbar-nav">
+
+                        {% if user.is_authenticated %}
+
+                        <a class="nav-item nav-link" href="{% url 'profile' %}">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+
+                        <a class="nav-item nav-link logout-link" href="{% url 'logout' %}">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+
+                        {% else %}
+
+                        <a class="nav-item nav-link" href="{% url 'login' %}">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+
+                        <a class="nav-item nav-link register-btn" href="{% url 'register' %}">
+                            Register
+                        </a>
+
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

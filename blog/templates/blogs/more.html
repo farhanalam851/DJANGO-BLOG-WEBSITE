@@ -1,0 +1,36 @@
+{% extends "blogs/base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <div class="page-icon">
+        <i class="fas fa-ellipsis-h"></i>
+    </div>
+
+    <h1>More</h1>
+
+    <p>
+        Explore more features of our blog.
+    </p>
+</div>
+
+<div class="more-links">
+
+    <a href="{% url 'blog-about' %}">
+        <i class="fas fa-info-circle"></i>
+        About Us
+    </a>
+
+    <a href="{% url 'profile' %}">
+        <i class="fas fa-user"></i>
+        My Profile
+    </a>
+
+    <a href="{% url 'blog-home' %}">
+        <i class="fas fa-home"></i>
+        Home
+    </a>
+
+</div>
+
+{% endblock %}
