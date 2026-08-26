@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
 from . forms import UserRegistrationForm , UserUpdateForm ,ProfileUpdateForm
 from django.contrib.auth import logout
@@ -7,6 +7,7 @@ from django.views.generic import ( ListView , DeleteView , UpdateView ,DetailVie
 from django.contrib.auth.mixins import LoginRequiredMixin , UserPassesTestMixin
 from blog.models import Posts
 from django.urls import reverse_lazy
+from django.contrib.auth.models import User
 # Create your views here.
 
 def register(request):
@@ -57,6 +58,17 @@ class PostListView(ListView):
     template_name = 'blogs/home.html'
     context_object_name = 'posts'
     ordering = ['-published_date']
+    paginate_by = 5
+
+class UserPostListView(ListView):
+    model = Posts
+    template_name = 'blogs/home.html'
+    context_object_name = 'posts'
+    paginate_by = 5
+
+    def get_queryset(self):
+        user = get_object_or_404(User,username=self.kwargs.get('username'))
+        return Posts.objects.filter(author=user).order_by('-published_date')
 
 class PostDetailView(DetailView):
     model = Posts
