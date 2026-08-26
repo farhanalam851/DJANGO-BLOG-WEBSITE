@@ -1,0 +1,37 @@
+{% extends "blogs/base.html" %}
+
+{% block content %}
+
+<div class="register-wrapper">
+
+    <div class="register-card">
+
+        <!-- Header -->
+        <div class="register-header">
+            <div class="register-icon">
+                <i class="fas fa-pen-nib"></i>
+            </div>
+
+            <h2>Create a New Post</h2>
+            <p>Share your thoughts, ideas, and stories with the community.</p>
+        </div>
+
+        <!-- Post Form -->
+        <form method="POST">
+            {% csrf_token %}
+
+            <fieldset class="form-group custom-form">
+                {{ form.as_p }}
+            </fieldset>
+
+            <button class="register-submit" type="submit">
+                <i class="fas fa-paper-plane"></i>
+                Publish Post
+            </button>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

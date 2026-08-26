@@ -3,7 +3,10 @@ from django.contrib import messages
 from . forms import UserRegistrationForm , UserUpdateForm ,ProfileUpdateForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-
+from django.views.generic import ( ListView , DeleteView , UpdateView ,DetailView ,CreateView )
+from django.contrib.auth.mixins import LoginRequiredMixin , UserPassesTestMixin
+from blog.models import Posts
+from django.urls import reverse_lazy
 # Create your views here.
 
 def register(request):
@@ -48,3 +51,50 @@ def profile(request):
         'users/profile.html',
         context
     )
+
+class PostListView(ListView):
+    model = Posts
+    template_name = 'blogs/home.html'
+    context_object_name = 'posts'
+    ordering = ['-published_date']
+
+class PostDetailView(DetailView):
+    model = Posts
+    template_name = 'blogs/post_detail.html'
+
+class PostCreateView(LoginRequiredMixin,CreateView ):
+    model = Posts    
+    template_name = 'blogs/post_form.html'
+    fields = ['title' , 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    
+class PostUpdateView(LoginRequiredMixin , UserPassesTestMixin,UpdateView ):
+    model = Posts    
+    template_name = 'blogs/post_form.html'
+    fields = ['title' , 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    template_name = 'blogs/post_confirm_delete.html'
+    model = Posts
+    success_url = reverse_lazy('blog-home')
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author
+
+
+    
