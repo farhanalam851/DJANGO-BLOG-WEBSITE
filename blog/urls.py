@@ -13,4 +13,5 @@ urlpatterns = [
      path('announcements/', views.announcements, name='announcements'),
     path('calendar/', views.calendar, name='calendar'),
     path('more/', views.more, name='more'),
+    path('post/<int:pk>/like/', views.like_post, name='like-post'),
 ]

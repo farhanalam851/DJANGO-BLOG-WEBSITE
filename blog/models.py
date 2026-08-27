@@ -16,3 +16,14 @@ class Posts(models.Model):
 
     def get_absolute_url(self):
         return reverse ('post-detail' , kwargs={'pk' : self.pk})
+
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Posts, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'post')
+
+    def __str__(self):
+        return f"{self.user.username} likes {self.post.title}"
