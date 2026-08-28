@@ -77,7 +77,7 @@ class PostDetailView(DetailView):
 class PostCreateView(LoginRequiredMixin,CreateView ):
     model = Posts    
     template_name = 'blogs/post_form.html'
-    fields = ['title' , 'content']
+    fields = ['title', 'content', 'image']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -87,7 +87,7 @@ class PostCreateView(LoginRequiredMixin,CreateView ):
 class PostUpdateView(LoginRequiredMixin , UserPassesTestMixin,UpdateView ):
     model = Posts    
     template_name = 'blogs/post_form.html'
-    fields = ['title' , 'content']
+    fields = ['title', 'content', 'image']
 
     def form_valid(self, form):
         form.instance.author = self.request.user

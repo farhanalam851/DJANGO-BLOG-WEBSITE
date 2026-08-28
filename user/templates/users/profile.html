@@ -3,27 +3,38 @@
 {% block content %}
 
 <div class="content-section">
-  <div class="media">
-<img class="rounded-circle account-img" src="{{user.profile.image.url}}">
-    <div class="media-body">
-      <h2 class="account-heading">{{request.user.username}}</h2>
-      <p class="text-secondary">{{request.user.email}}</p>
+    <div class="media">
+
+        {% if user.profile.image %}
+            <img class="rounded-circle account-img"
+                 src="{{ user.profile.image.url }}"
+                 alt="Profile Picture">
+        {% else %}
+            <img class="rounded-circle account-img"
+                 src="/media/profile_pics/default.jpg"
+                 alt="Default Profile Picture">
+        {% endif %}
+
+        <div class="media-body">
+            <h2 class="account-heading">{{ request.user.username }}</h2>
+            <p class="text-secondary">{{ request.user.email }}</p>
+        </div>
+
     </div>
-  </div>
-  <!-- FORM HERE -->
+
     <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
+        {% csrf_token %}
 
-            <fieldset class="form-group custom-form">
-                {{ u_form.as_p }}
-                {{ p_form.as_p }}
-            </fieldset>
+        <fieldset class="form-group custom-form">
+            {{ u_form.as_p }}
+            {{ p_form.as_p }}
+        </fieldset>
 
-            <button class="register-submit" type="submit">
-                <i class="fas fa-user-plus"></i>
-                Update
-            </button>
-        </form>
+        <button class="register-submit" type="submit">
+            <i class="fas fa-user-plus"></i>
+            Update
+        </button>
+    </form>
 </div>
 
 {% endblock %}

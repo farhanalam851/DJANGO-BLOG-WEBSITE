@@ -7,14 +7,21 @@
 <article class="media content-section">
 
 
-<img class="rounded-circle article-img"
-     src="{{ post.author.profile.image.url }}"
-     alt="">
+<!-- Author Profile Image -->
+{% if post.author.profile.image %}
+    <img class="rounded-circle article-img"
+         src="{{ post.author.profile.image.url }}"
+         alt="{{ post.author.username }}">
+{% else %}
+    <img class="rounded-circle article-img"
+         src="/media/profile_pics/default.jpg"
+         alt="Default Profile Picture">
+{% endif %}
 
 <div class="media-body">
 
+    <!-- Post Metadata -->
     <div class="article-metadata">
-
         <a class="mr-2"
            href="{% url 'user-posts' post.author.username %}">
             {{ post.author }}
@@ -23,9 +30,9 @@
         <small class="text-muted">
             {{ post.published_date|date:"F d, Y" }}
         </small>
-
     </div>
 
+    <!-- Post Title -->
     <h2>
         <a class="article-title"
            href="{% url 'post-detail' post.id %}">
@@ -33,11 +40,24 @@
         </a>
     </h2>
 
+    <!-- Post Image -->
+    {% if post.image %}
+        <img class="post-image"
+             src="{{ post.image.url }}"
+             alt="{{ post.title }}">
+    {% endif %}
+
+    <!-- Short Post Preview -->
     <p class="article-content">
-        {{ post.content }}
+        {{ post.content|truncatewords:30 }}
     </p>
 
-    <!-- ❤️ Like Count -->
+    <!-- Read More -->
+    <a href="{% url 'post-detail' post.id %}" class="read-more">
+        Read More →
+    </a>
+
+    <!-- Like Count -->
     <div class="mt-2">
         ❤️ {{ post.like_set.count }} Likes
     </div>
@@ -52,6 +72,7 @@
 <!-- Pagination -->
 
 {% if is_paginated %}
+
 
 {% if page_obj.has_previous %}
 
